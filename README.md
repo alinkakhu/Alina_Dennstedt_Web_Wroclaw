@@ -44,4 +44,4 @@ http://localhost:5173
 
 ## Aplikacja online
 
-Link do GitHub Pages zostanie dodany po publikacji.
+https://alinkakhu.github.io/Alina_Dennstedt_Web_Wroclaw/
