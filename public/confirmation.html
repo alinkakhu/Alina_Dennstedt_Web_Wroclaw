@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Potwierdzenie zamówienia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            text-align: center;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Zamówienie złożone pomyślnie!</h1>
+    <p>Twoje zamówienie zostało przyjęte do realizacji.</p>
+
+    <div id="summary"></div>
+
+    <a href="/">Wróć do strony głównej</a>
+
+    <script>
+        const container = document.getElementById("summary");
+        const summary = JSON.parse(localStorage.getItem("orderSummary"));
+
+        if (summary && summary.items.length > 0) {
+            let html = `
+          <h2>Podsumowanie zamówienia</h2>
+          <table>
+            <tr>
+              <th>Produkt</th>
+              <th>Ilość</th>
+              <th>Cena jednostkowa</th>
+              <th>Suma</th>
+            </tr>
+        `;
+
+            summary.items.forEach(item => {
+                const price = item.product.price.main + item.product.price.fractional / 100;
+                const total = (price * item.quantity).toFixed(2);
+                html += `
+            <tr>
+              <td>${item.product.name}</td>
+              <td>${item.quantity}</td>
+              <td>${price.toFixed(2)} zł</td>
+              <td>${total} zł</td>
+            </tr>
+          `;
+            });
+
+            html += `
+          </table>
+          <h3>Łączna kwota: ${summary.total.toFixed(2)} zł</h3>
+        `;
+
+            container.innerHTML = html;
+        } else {
+            container.innerHTML = "<p>Brak danych o zamówieniu.</p>";
+        }
+
+        localStorage.removeItem("orderSummary");
+    </script>
+</body>
+
+</html>
