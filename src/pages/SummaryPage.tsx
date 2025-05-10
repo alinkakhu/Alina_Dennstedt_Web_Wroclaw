@@ -19,7 +19,7 @@ const SummaryPage = () => {
 
   clearCart();
 
-  window.location.href = "/confirmation.html";
+  window.location.href = `${import.meta.env.BASE_URL}confirmation.html`;
 };
 
 
